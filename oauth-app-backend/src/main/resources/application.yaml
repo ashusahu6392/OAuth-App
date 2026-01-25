@@ -1,3 +1,4 @@
 spring:
   application:
-    name: oauth-app-backend
+    name: oauth-app-backend	
+server:port: 8082
