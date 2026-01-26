@@ -1,6 +1,5 @@
 package com.substring.auth.oauth_app_backend.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.substring.auth.oauth_app_backend.dtos.UserDto;
