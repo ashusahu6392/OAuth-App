@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public Iterable<UserDto> getAllUsers() {
 		// TODO Auto-generated method stub
 		return userRepository.findAll().stream().map((User user) -> modelMapper.map(user, UserDto.class)).toList();
