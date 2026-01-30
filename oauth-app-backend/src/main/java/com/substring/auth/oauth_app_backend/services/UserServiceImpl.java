@@ -1,12 +1,10 @@
 package com.substring.auth.oauth_app_backend.services;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.substring.auth.oauth_app_backend.dtos.UserDto;
-import com.substring.auth.oauth_app_backend.entities.Provider;
-import com.substring.auth.oauth_app_backend.entities.User;
-import com.substring.auth.oauth_app_backend.exception.ResourceNotFoundException;
 import com.substring.auth.oauth_app_backend.repositories.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -23,17 +21,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public UserDto createUser(UserDto userDto) {
 		// TODO Auto-generated method stub
-		
-		if(userDto.getEmail() == null || userDto.getEmail().isBlank()) {
-			throw new IllegalArgumentException("Email is required");
-		}
-		if(userRepository.existsByEmail(userDto.getEmail())) {
-			throw new IllegalArgumentException("Email already exists");
-		}
-		User user = modelMapper.map(userDto, User.class) ;
-		user.setProvider(userDto.getProvider() != null ? userDto.getProvider() : Provider. LOCAL) ;
-		User savedUser = userRepository.save(user) ;
-		return modelMapper.map(savedUser, UserDto.class) ;
+		return null;
 	}
 
 	@Override
@@ -65,7 +53,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Iterable<UserDto> getAllUsers() {
 		// TODO Auto-generated method stub
-		return null;
+		return userRepository.findAll().stream().map((User user) -> modelMapper.map(user, UserDto.class)).toList();
 	}
 
 }
