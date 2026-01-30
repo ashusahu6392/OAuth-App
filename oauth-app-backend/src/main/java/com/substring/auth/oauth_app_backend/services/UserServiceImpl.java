@@ -5,6 +5,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.substring.auth.oauth_app_backend.dtos.UserDto;
+import com.substring.auth.oauth_app_backend.entities.User;
+import com.substring.auth.oauth_app_backend.exception.ResourceNotFoundException;
 import com.substring.auth.oauth_app_backend.repositories.UserRepository;
 
 import jakarta.transaction.Transactional;
