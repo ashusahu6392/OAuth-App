@@ -1,5 +1,7 @@
 package com.substring.auth.oauth_app_backend.services;
 
+import java.util.UUID;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import com.substring.auth.oauth_app_backend.dtos.UserDto;
 import com.substring.auth.oauth_app_backend.entities.Provider;
 import com.substring.auth.oauth_app_backend.entities.User;
 import com.substring.auth.oauth_app_backend.exception.ResourceNotFoundException;
+import com.substring.auth.oauth_app_backend.helpers.UserHelper;
 import com.substring.auth.oauth_app_backend.repositories.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -48,19 +51,33 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto updateUser(UserDto userDto, String userId) {
 		// TODO Auto-generated method stub
-		return null;
+		UUID uId = UserHelper.parseUUID(userId);
+		User existingUser = userRepository.findById(uId).orElseThrow(() -> new ResourceNotFoundException("User not found with with given Id"));
+		
+		if(userDto.getName() != null) existingUser.setName(userDto.getName());
+		if(userDto.getImage() != null) existingUser.setImage(userDto.getImage());
+		if(userDto.getProvider() !=null) existingUser.setProvider(userDto.getProvider());
+		
+		if(userDto.getPassword() !=null) existingUser.setPassword(userDto.getPassword());
+		existingUser.setEnable(userDto.isEnable());
+		
+		User updatedUser = userRepository.save(existingUser);
+		return modelMapper.map(updatedUser, UserDto.class);
 	}
 
 	@Override
 	public void deleteUser(String userId) {
 		// TODO Auto-generated method stub
-
+		UUID uId = UserHelper.parseUUID(userId);
+		User user = userRepository.findById(uId).orElseThrow(() -> new ResourceNotFoundException("User Not Found With Given ID"));
+		userRepository.delete(user);
 	}
 
 	@Override
 	public UserDto getUserById(String userId) {
 		// TODO Auto-generated method stub
-		return null;
+		User user = userRepository.findById(UserHelper.parseUUID(userId)).orElseThrow(() -> new ResourceNotFoundException("User Not Found With Given ID"));
+		return modelMapper.map(user, UserDto.class);
 	}
 
 	@Override
