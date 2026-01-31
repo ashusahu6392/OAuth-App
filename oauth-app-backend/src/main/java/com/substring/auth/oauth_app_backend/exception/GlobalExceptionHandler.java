@@ -13,9 +13,17 @@ public class GlobalExceptionHandler {
 	                  
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleResourseNotFoundException(ResourceNotFoundException exception){
-		ErrorResponse internalServerError = new ErrorResponse(exception.getMessage(), HttpStatus.NOT_FOUND);
+		ErrorResponse internalServerError = new ErrorResponse(exception.getMessage(), HttpStatus.NOT_FOUND,404);
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(internalServerError);
 	}
 
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException exception){
+		ErrorResponse internalServerError = new ErrorResponse(exception.getMessage(), HttpStatus.BAD_REQUEST, 400);
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(internalServerError);
+	}
 }
+ 
