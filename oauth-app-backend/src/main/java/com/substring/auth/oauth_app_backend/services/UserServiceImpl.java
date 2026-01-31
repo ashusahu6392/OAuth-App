@@ -1,5 +1,6 @@
 package com.substring.auth.oauth_app_backend.services;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -60,6 +61,7 @@ public class UserServiceImpl implements UserService {
 		
 		if(userDto.getPassword() !=null) existingUser.setPassword(userDto.getPassword());
 		existingUser.setEnable(userDto.isEnable());
+		existingUser.setUpdatedAt(Instant.now());
 		
 		User updatedUser = userRepository.save(existingUser);
 		return modelMapper.map(updatedUser, UserDto.class);
