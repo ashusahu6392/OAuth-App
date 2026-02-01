@@ -9,5 +9,4 @@ public class OauthAppBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OauthAppBackendApplication.class, args);
 	}
-
 }
