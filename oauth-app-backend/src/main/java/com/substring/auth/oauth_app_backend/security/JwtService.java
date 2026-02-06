@@ -116,6 +116,27 @@ public class JwtService {
 
         return "access".equals(claims.get("typ"));
     }
+    
+    public boolean isRefreshToken(String token) {
+
+        Claims claims = parse(token).getBody();
+
+        return "refresh".equals(claims.get("typ"));
+    }
+
+    
+    public UUID getUserId(String token) {
+
+        Claims claims = parse(token).getBody();
+
+        return UUID.fromString(claims.getSubject());
+    }
+
+    public String getJti(String token) {
+
+        return parse(token).getBody().getId();
+    }
+
 
 
 
