@@ -17,10 +17,17 @@ public class CustomUserDetailService implements UserDetailsService {
 	
 	private final UserRepository userRepository;
 
+
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub		
-		return userRepository.findByEmail(username).orElseThrow(()-> new ResourceNotFoundException("Invalid Email or Password"));
+	public UserDetails loadUserByUsername(String username)
+	        throws UsernameNotFoundException {
+
+	    User user = userRepository.findByEmail(username)
+	            .orElseThrow(() ->
+	                    new UsernameNotFoundException("Invalid Email or Password"));
+
+	    return user;   // Your entity ALREADY implements UserDetails ✅
 	}
+
 
 }
